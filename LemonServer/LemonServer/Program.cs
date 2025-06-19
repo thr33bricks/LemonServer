@@ -139,11 +139,11 @@ namespace LemonServer
                 }
                 catch (OperationCanceledException)
                 {
-                    Console.WriteLine("Task cancelled");
+                    //Console.WriteLine("Task cancelled");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Task faulted: {ex}");
+                    //Console.WriteLine($"Task faulted: {ex}");
                 }
 
                 FPS = 0;
