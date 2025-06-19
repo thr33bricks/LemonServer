@@ -25,13 +25,13 @@ LemonServer is a lightweight utility that exposes real-time system stats and FPS
   "gpuName": "NVIDIA GeForce RTX 3060 Laptop GPU",
   "totalMemory": 16235,
   "availableMemory": 2283,
-  "cpuTemp": 72.33,
-  "cpuLoad": 89.7,
+  "cpuTemp": 72.3333359,
+  "cpuLoad": 89.6999969,
   "gpuTemp": 71,
-  "gpuLoad": 37.73,
+  "gpuLoad": 37.7296906,
   "gpuTotalVram": 6144,
   "gpuAvailVram": 1340,
-  "currFps": 106.34
+  "currFps": 106.343132
 }
 ```
 
