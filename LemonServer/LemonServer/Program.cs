@@ -22,6 +22,9 @@ namespace LemonServer
         [DllImport("user32.dll")]
         private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
+        static private Task fpsTask;
+        static private readonly object fpsLock = new object();
+
         static uint currentPid = 0;
         static volatile float FPS = 0;
         static CancellationTokenSource fpsCts;
@@ -99,6 +102,7 @@ namespace LemonServer
                 }
             }
 
+            FpsInspector.StopTraceSession();
             fpsCts?.Cancel();
             fpsCts?.Dispose();
             hwInfo.close();
@@ -115,39 +119,47 @@ namespace LemonServer
                 // string exeName = Path.GetFileName(Process.GetProcessById((int)processId).MainModule.FileName);
                 // Console.WriteLine($"{exeName}");
 
-                fpsCts?.Cancel();
-                fpsCts?.Dispose();
-
+                currentPid = processId;
                 StartFPS(processId);
             }
         }
 
         static void StartFPS(uint pid)
         {
-            currentPid = pid;
-            fpsCts = new CancellationTokenSource();
-            var token = fpsCts.Token;
-
-            Task.Run(async () =>
+            lock (fpsLock)
             {
-                try
-                {
-                    await FpsInspector.StartForeverAsync(new FpsRequest(pid), result =>
-                    {
-                        FPS = (float)result.Fps;
-                    }, token);
-                }
-                catch (OperationCanceledException)
-                {
-                    //Console.WriteLine("Task cancelled");
-                }
-                catch (Exception ex)
-                {
-                    //Console.WriteLine($"Task faulted: {ex}");
-                }
+                currentPid = pid;
 
-                FPS = 0;
-            });
+                // Cancel previous instance
+                fpsCts?.Cancel();
+                fpsCts?.Dispose();
+                fpsCts = new CancellationTokenSource();
+                var token = fpsCts.Token;
+
+                fpsTask = Task.Run(async () =>
+                {
+                    try
+                    {
+                        await FpsInspector.StartForeverAsync(new FpsRequest(pid) { PeriodMillisecond = 10 }, result =>
+                        {
+                            float fps = (float)result.Fps;
+                            FPS = fps;
+                        }, token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // normal during cancellation
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    finally
+                    {
+                        FPS = 0;
+                    }
+                });
+            }
         }
     }
 }
