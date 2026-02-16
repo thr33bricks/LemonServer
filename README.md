@@ -64,8 +64,8 @@ http://localhost:{port}/exit
 
 ## 🔗 Related Repositories and Website
 
-The complete Lemon Monitor ecosystem includes a Windows desktop application, firmware and a local server:
+The complete Lemon Monitor ecosystem includes a Windows desktop application and firmware:
 
 * **Official Website:** [lemon.yourdan.uk](http://lemon.yourdan.uk)
 * **Windows Application:** [LemonMonitor App](https://github.com/thr33bricks/LemonMonitor)
-* **Hardware Monitor Web Server:** [LemonServer](https://github.com/thr33bricks/LemonServer/)
+* **Hardware Monitor Web Server:** [LemonMonitor Firmware](https://github.com/thr33bricks/LemonMonitor-firmware-community)
