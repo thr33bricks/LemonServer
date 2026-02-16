@@ -61,3 +61,11 @@ http://localhost:{port}/exit
 - .NET Framework: Version 4.7.2 or higher
 
 ⚠️ Make sure you run LemonServer as **Administrator**
+
+## 🔗 Related Repositories and Website
+
+The complete Lemon Monitor ecosystem includes a Windows desktop application, firmware and a local server:
+
+* **Official Website:** [lemon.yourdan.uk](http://lemon.yourdan.uk)
+* **Windows Application:** [LemonMonitor App](https://github.com/thr33bricks/LemonMonitor)
+* **Hardware Monitor Web Server:** [LemonServer](https://github.com/thr33bricks/LemonServer/)
